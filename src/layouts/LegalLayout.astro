@@ -33,38 +33,46 @@ const hasFooterContent = Boolean(app.companyName || app.websiteUrl);
 		<title>{title}</title>
 	</head>
 	<body>
-		<div class="min-h-screen bg-background">
+		<div class="flex min-h-screen flex-col bg-background">
 			<header class="border-b bg-background/95">
-				<div class="mx-auto flex w-full max-w-3xl flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+				<div class="mx-auto flex w-full max-w-3xl px-6 py-6">
 					<a class="text-lg font-medium text-foreground" href={`/${app.slug}/support`}>
 						{app.name}
 					</a>
-					<nav class="flex flex-wrap gap-4 text-sm text-muted-foreground" aria-label="Legal pages">
-						<a class="hover:text-foreground" href={`/${app.slug}/privacy`}>Privacy</a>
-						<a class="hover:text-foreground" href={`/${app.slug}/terms`}>Terms</a>
-						<a class="hover:text-foreground" href={`/${app.slug}/support`}>Support</a>
-					</nav>
 				</div>
 			</header>
 
-			<main class="mx-auto w-full max-w-3xl px-6 py-10 sm:py-14">
+			<main class="mx-auto w-full max-w-3xl flex-1 px-6 py-10 sm:py-14">
 				<slot />
 			</main>
 
-			{
-				hasFooterContent && (
-					<footer class="border-t">
-						<div class="mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+			<footer class="border-t">
+				<div class="mx-auto flex w-full max-w-3xl flex-col items-center gap-4 px-6 py-6 text-sm text-muted-foreground">
+					<nav class="flex flex-wrap justify-center gap-8" aria-label="Legal pages">
+						<a class="underline underline-offset-4 hover:text-foreground" href={`/${app.slug}/privacy`}
+							>Privacy</a
+						>
+						<a class="underline underline-offset-4 hover:text-foreground" href={`/${app.slug}/terms`}
+							>Terms</a
+						>
+						<a class="underline underline-offset-4 hover:text-foreground" href={`/${app.slug}/support`}
+							>Support</a
+						>
+					</nav>
+					{
+						hasFooterContent && (
+							<div class="flex flex-col items-center gap-2 sm:flex-row sm:gap-4">
 							{app.companyName && <p>{app.companyName}</p>}
 							{app.websiteUrl && (
 								<a class="hover:text-foreground" href={app.websiteUrl}>
 									Website
 								</a>
 							)}
-						</div>
-					</footer>
-				)
-			}
+							</div>
+						)
+					}
+				</div>
+			</footer>
 		</div>
 	</body>
 </html>

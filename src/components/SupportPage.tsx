@@ -105,7 +105,7 @@ export function SupportPage({ app }: Props) {
 			{hasStoreLinks && (
 				<div className="flex flex-col gap-4">
 					<Separator />
-					<div className="flex flex-wrap gap-3">
+					<div className="flex flex-wrap justify-end gap-3">
 						{app.appStoreUrl && (
 							<Button variant="outline" asChild>
 								<a href={app.appStoreUrl}>

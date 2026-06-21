@@ -1,49 +1,187 @@
 ---
-import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
-import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import BaseHead from "../components/BaseHead.astro";
+import { loadAppConfig } from "@/config/load-app-config";
+
+const app = loadAppConfig("maxxing-ai");
+const pageTitle = `${app.name} - AI companion for better answers`;
+const pageDescription =
+	"Maxxing AI helps you explore ideas, refine prompts, and turn everyday questions into clearer next steps.";
+
+const highlights = [
+	{
+		title: "Ask with context",
+		description:
+			"Add the details that matter and get responses shaped around your real situation.",
+	},
+	{
+		title: "Refine rough ideas",
+		description:
+			"Turn drafts, notes, and unfinished thoughts into cleaner options you can compare.",
+	},
+	{
+		title: "Move faster",
+		description:
+			"Use AI support for planning, rewriting, brainstorming, and everyday decision prep.",
+	},
+];
+
+const useCases = [
+	"Rewrite a message before sending it",
+	"Brainstorm options when you feel stuck",
+	"Summarize a messy note into next steps",
+	"Compare different tones, angles, or structures",
+];
 ---
 
 <!doctype html>
 <html lang="en">
 	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<BaseHead title={pageTitle} description={pageDescription} />
 	</head>
 	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
+		<div class="flex min-h-screen flex-col bg-background">
+			<header class="border-b bg-background/95">
+				<div class="mx-auto flex w-full max-w-5xl items-center justify-between gap-6 px-6 py-6">
+					<a class="text-lg font-medium text-foreground" href="/">
+						{app.name}
+					</a>
+					<nav
+						class="flex items-center gap-5 text-sm text-muted-foreground"
+						aria-label="Primary navigation"
+					>
+						<a class="hover:text-foreground" href="/maxxing-ai/privacy">Privacy</a>
+						<a class="hover:text-foreground" href="/maxxing-ai/terms">Terms</a>
+						<a class="font-medium text-foreground" href="/maxxing-ai/support">Support</a>
+					</nav>
+				</div>
+			</header>
+
+			<main class="flex-1">
+				<section class="mx-auto grid w-full max-w-5xl gap-10 px-6 py-16 sm:py-20 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:py-24">
+					<div class="flex flex-col gap-6">
+						<h1 class="max-w-3xl text-4xl font-bold tracking-tight text-balance text-foreground sm:text-5xl lg:text-6xl">
+							Think clearer with {app.name}.
+						</h1>
+						<p class="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+							Use Maxxing AI to shape rough thoughts into useful answers,
+							practical drafts, and better questions. It is built for everyday
+							moments when you want a second pass before you act.
+						</p>
+						<div class="flex flex-col gap-3 sm:flex-row">
+							<a
+								class="inline-flex h-9 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/80"
+								href="/maxxing-ai/support"
+							>
+								Get support
+								<svg
+									class="size-4"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+									aria-hidden="true"
+								>
+									<path d="M5 12h14"></path>
+									<path d="m12 5 7 7-7 7"></path>
+								</svg>
+							</a>
+							<a
+								class="inline-flex h-9 items-center justify-center rounded-lg border border-border bg-background px-4 text-sm font-medium text-foreground transition-colors hover:bg-muted"
+								href={`mailto:${app.supportEmail}`}
+							>
+								Contact us
+							</a>
+						</div>
+					</div>
+
+					<div class="rounded-[2rem] bg-muted p-4 sm:p-6">
+						<div class="rounded-2xl bg-card p-5 shadow-sm ring-1 ring-foreground/10">
+							<div class="flex items-center justify-between gap-4 border-b pb-4">
+								<div>
+									<p class="text-sm font-medium text-foreground">Today</p>
+									<p class="text-sm text-muted-foreground">Prompt workspace</p>
+								</div>
+								<div class="rounded-full bg-primary px-3 py-1 text-xs font-medium text-primary-foreground">
+									Ready
+								</div>
+							</div>
+							<div class="flex flex-col gap-4 pt-5">
+								<div class="rounded-xl bg-muted px-4 py-3">
+									<p class="text-sm leading-6 text-foreground">
+										Help me turn this rough idea into a clear message with a
+										calm, confident tone.
+									</p>
+								</div>
+								<div class="rounded-xl border bg-card px-4 py-3">
+									<p class="text-sm leading-6 text-muted-foreground">
+										Start with the goal, keep the wording direct, and give the
+										reader one obvious next step.
+									</p>
+								</div>
+								<div class="grid gap-3 sm:grid-cols-2">
+									<div class="rounded-xl border px-4 py-3">
+										<p class="text-xs font-medium text-muted-foreground">Tone</p>
+										<p class="mt-1 text-sm font-medium text-foreground">Clear</p>
+									</div>
+									<div class="rounded-xl border px-4 py-3">
+										<p class="text-xs font-medium text-muted-foreground">Format</p>
+										<p class="mt-1 text-sm font-medium text-foreground">Actionable</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section class="border-y bg-muted">
+					<div class="mx-auto grid w-full max-w-5xl gap-4 px-6 py-12 md:grid-cols-3">
+						{highlights.map((item) => (
+							<article class="rounded-xl bg-card p-5 shadow-sm ring-1 ring-foreground/10">
+								<h2 class="text-base font-medium text-foreground">{item.title}</h2>
+								<p class="mt-2 text-sm leading-6 text-muted-foreground">
+									{item.description}
+								</p>
+							</article>
+						))}
+					</div>
+				</section>
+
+				<section class="mx-auto grid w-full max-w-5xl gap-10 px-6 py-16 md:grid-cols-[0.8fr_1.2fr] md:items-start">
+					<div>
+						<h2 class="text-3xl font-semibold tracking-tight text-balance text-foreground">
+							Built for the little moments that still matter.
+						</h2>
+						<p class="mt-4 text-base leading-7 text-muted-foreground">
+							AI output can make mistakes, so verify important information.
+							Maxxing AI is best used as a thinking partner: fast, flexible, and
+							most useful when you bring your own judgment.
+						</p>
+					</div>
+					<div class="rounded-[2rem] bg-muted px-6 py-6 sm:px-8">
+						<ul class="grid gap-3">
+							{useCases.map((item) => (
+								<li class="flex items-start gap-3 rounded-xl bg-card px-4 py-3 text-sm leading-6 text-foreground shadow-sm ring-1 ring-foreground/10">
+									<span class="mt-2 size-1.5 shrink-0 rounded-full bg-foreground"></span>
+									<span>{item}</span>
+								</li>
+							))}
+						</ul>
+					</div>
+				</section>
+			</main>
+
+			<footer class="border-t">
+				<div class="mx-auto flex w-full max-w-5xl flex-col items-center gap-4 px-6 py-6 text-sm text-muted-foreground sm:flex-row sm:justify-between">
+					<p>{app.name}</p>
+					<nav class="flex flex-wrap justify-center gap-6" aria-label="Footer navigation">
+						<a class="underline underline-offset-4 hover:text-foreground" href="/maxxing-ai/privacy">Privacy</a>
+						<a class="underline underline-offset-4 hover:text-foreground" href="/maxxing-ai/terms">Terms</a>
+						<a class="underline underline-offset-4 hover:text-foreground" href="/maxxing-ai/support">Support</a>
+					</nav>
+				</div>
+			</footer>
+		</div>
 	</body>
 </html>
