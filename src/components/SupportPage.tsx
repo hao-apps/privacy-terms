@@ -21,10 +21,15 @@ type Props = {
 };
 
 export function SupportPage({ app }: Props) {
+	const faqs = app.faqs ?? [];
+	const hasStoreLinks = Boolean(app.appStoreUrl || app.googlePlayUrl);
+
 	return (
 		<div className="flex flex-col gap-6">
 			<section className="flex flex-col gap-3">
-				<p className="text-sm text-muted-foreground">{app.companyName}</p>
+				{app.companyName && (
+					<p className="text-sm text-muted-foreground">{app.companyName}</p>
+				)}
 				<h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
 					{app.name} Support
 				</h1>
@@ -34,23 +39,26 @@ export function SupportPage({ app }: Props) {
 				</p>
 			</section>
 
-			<Card>
-				<CardHeader>
-					<CardTitle>Contact Support</CardTitle>
-					<CardDescription>
-						We will use your message to investigate and respond to your request.
-					</CardDescription>
-				</CardHeader>
-				<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-					<p className="text-sm text-muted-foreground">{app.supportEmail}</p>
-					<Button asChild>
-						<a href={`mailto:${app.supportEmail}`}>
-							<MailIcon data-icon="inline-start" />
-							Email Support
-						</a>
-					</Button>
-				</CardContent>
-			</Card>
+			{app.supportEmail && (
+				<Card>
+					<CardHeader>
+						<CardTitle>Contact Support</CardTitle>
+						<CardDescription>
+							We will use your message to investigate and respond to your
+							request.
+						</CardDescription>
+					</CardHeader>
+					<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+						<p className="text-sm text-muted-foreground">{app.supportEmail}</p>
+						<Button asChild>
+							<a href={`mailto:${app.supportEmail}`}>
+								<MailIcon data-icon="inline-start" />
+								Email Support
+							</a>
+						</Button>
+					</CardContent>
+				</Card>
+			)}
 
 			<Card>
 				<CardHeader>
@@ -67,7 +75,7 @@ export function SupportPage({ app }: Props) {
 				</CardContent>
 			</Card>
 
-			{app.faqs && app.faqs.length > 0 && (
+			{faqs.length > 0 && (
 				<section className="-mx-6 mt-4 flex flex-col gap-10 rounded-[2rem] bg-muted px-6 py-12 text-foreground sm:mx-0 sm:px-8 sm:py-16">
 					<div className="mx-auto max-w-2xl text-center">
 						<h2 className="text-3xl font-semibold tracking-tight text-balance text-foreground sm:text-4xl">
@@ -82,7 +90,7 @@ export function SupportPage({ app }: Props) {
 							defaultValue="item-0"
 							className="w-full rounded-2xl bg-card px-6 py-2 shadow-sm"
 						>
-							{app.faqs.map((faq, index) => (
+							{faqs.map((faq, index) => (
 								<AccordionItem key={faq.question} value={`item-${index}`}>
 									<AccordionTrigger className="cursor-pointer py-5 text-left text-base font-semibold hover:no-underline sm:text-lg">
 										{faq.question}
@@ -97,7 +105,7 @@ export function SupportPage({ app }: Props) {
 				</section>
 			)}
 
-			{(app.appStoreUrl || app.googlePlayUrl) && (
+			{hasStoreLinks && (
 				<div className="flex flex-col gap-4">
 					<Separator />
 					<div className="flex flex-wrap gap-3">

@@ -10,6 +10,7 @@ type Props = {
 
 const { app, title, description } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const hasFooterContent = Boolean(app.companyName || app.websiteUrl);
 ---
 
 <!doctype html>
@@ -50,18 +51,20 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 				<slot />
 			</main>
 
-			<footer class="border-t">
-				<div class="mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-					<p>{app.companyName}</p>
-					{
-						app.websiteUrl && (
-							<a class="hover:text-foreground" href={app.websiteUrl}>
-								Website
-							</a>
-						)
-					}
-				</div>
-			</footer>
+			{
+				hasFooterContent && (
+					<footer class="border-t">
+						<div class="mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+							{app.companyName && <p>{app.companyName}</p>}
+							{app.websiteUrl && (
+								<a class="hover:text-foreground" href={app.websiteUrl}>
+									Website
+								</a>
+							)}
+						</div>
+					</footer>
+				)
+			}
 		</div>
 	</body>
 </html>

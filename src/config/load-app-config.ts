@@ -6,21 +6,32 @@ const appFaqSchema = z.object({
 	answer: z.string().min(1),
 });
 
+const optionalString = z.preprocess(
+	(value) => (typeof value === "string" ? value.trim() || undefined : value),
+	z.string().min(1).optional(),
+);
+const optionalEmail = z.preprocess(
+	(value) => (typeof value === "string" ? value.trim() || undefined : value),
+	z.string().email().optional(),
+);
+const optionalUrl = z.preprocess(
+	(value) => (typeof value === "string" ? value.trim() || undefined : value),
+	z.string().url().optional(),
+);
+
 const rawAppConfigSchema = z.object({
 	name: z.string().min(1).optional(),
-	companyName: z.string().min(1).optional(),
-	supportEmail: z.string().email().optional(),
-	privacyEmail: z.string().email().optional(),
-	appStoreUrl: z.string().url().optional(),
-	googlePlayUrl: z.string().url().optional(),
-	websiteUrl: z.string().url().optional(),
+	companyName: optionalString,
+	supportEmail: optionalEmail,
+	privacyEmail: optionalEmail,
+	appStoreUrl: optionalUrl,
+	googlePlayUrl: optionalUrl,
+	websiteUrl: optionalUrl,
 	faqs: z.array(appFaqSchema).optional(),
 });
 
 const defaultConfigSchema = rawAppConfigSchema.required({
 	name: true,
-	companyName: true,
-	supportEmail: true,
 });
 
 type RawAppConfig = z.infer<typeof rawAppConfigSchema>;
@@ -63,5 +74,12 @@ export function loadAppConfig(appSlug: string): AppConfig {
 		...defaultConfigResult.data,
 		...appConfig,
 		slug: appSlug,
+		companyName: appConfig?.companyName,
+		supportEmail: appConfig?.supportEmail,
+		privacyEmail: appConfig?.privacyEmail,
+		appStoreUrl: appConfig?.appStoreUrl,
+		googlePlayUrl: appConfig?.googlePlayUrl,
+		websiteUrl: appConfig?.websiteUrl,
+		faqs: appConfig?.faqs,
 	};
 }
