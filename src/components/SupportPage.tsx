@@ -68,22 +68,33 @@ export function SupportPage({ app }: Props) {
 			</Card>
 
 			{app.faqs && app.faqs.length > 0 && (
-				<Card>
-					<CardHeader>
-						<CardTitle>FAQ</CardTitle>
-						<CardDescription>Common questions about support and billing.</CardDescription>
-					</CardHeader>
-					<CardContent>
-						<Accordion type="single" collapsible>
+				<section className="-mx-6 mt-4 flex flex-col gap-10 rounded-[2rem] bg-muted px-6 py-12 text-foreground sm:mx-0 sm:px-8 sm:py-16">
+					<div className="mx-auto max-w-2xl text-center">
+						<h2 className="text-3xl font-semibold tracking-tight text-balance text-foreground sm:text-4xl">
+							Frequently asked questions about {app.name}
+						</h2>
+					</div>
+
+					<div className="mx-auto w-full max-w-full">
+						<Accordion
+							type="single"
+							collapsible
+							defaultValue="item-0"
+							className="w-full rounded-2xl bg-card px-6 py-2 shadow-sm"
+						>
 							{app.faqs.map((faq, index) => (
 								<AccordionItem key={faq.question} value={`item-${index}`}>
-									<AccordionTrigger>{faq.question}</AccordionTrigger>
-									<AccordionContent forceMount>{faq.answer}</AccordionContent>
+									<AccordionTrigger className="cursor-pointer py-5 text-left text-base font-semibold hover:no-underline sm:text-lg">
+										{faq.question}
+									</AccordionTrigger>
+									<AccordionContent className="text-base leading-7 text-muted-foreground">
+										{faq.answer}
+									</AccordionContent>
 								</AccordionItem>
 							))}
 						</Accordion>
-					</CardContent>
-				</Card>
+					</div>
+				</section>
 			)}
 
 			{(app.appStoreUrl || app.googlePlayUrl) && (
