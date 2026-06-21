@@ -26,11 +26,8 @@ export function SupportPage({ app }: Props) {
 
 	return (
 		<div className="flex flex-col gap-6">
-			<section className="flex flex-col gap-3">
-				{app.companyName && (
-					<p className="text-sm text-muted-foreground">{app.companyName}</p>
-				)}
-				<h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+			<section className="flex flex-col items-center gap-3 text-center">
+				<h1 className="mx-auto max-w-full text-3xl font-bold text-pretty text-foreground lg:text-4xl">
 					{app.name} Support
 				</h1>
 				<p className="max-w-2xl text-base leading-7 text-muted-foreground">
