@@ -1,0 +1,28 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro";
+import { SupportPage } from "@/components/SupportPage";
+import { getAppSlugs } from "@/config/app-slugs";
+import { loadAppConfig } from "@/config/load-app-config";
+
+export function getStaticPaths() {
+	return getAppSlugs().map((app) => ({
+		params: { app },
+	}));
+}
+
+const appSlug = Astro.params.app;
+
+if (!appSlug) {
+	return Astro.redirect("/404");
+}
+
+const app = loadAppConfig(appSlug);
+---
+
+<LegalLayout
+	app={app}
+	title={`${app.name} Support`}
+	description={`Support page for ${app.name}.`}
+>
+	<SupportPage app={app} client:load />
+</LegalLayout>

@@ -1,0 +1,17 @@
+{
+	"name": "App",
+	"companyName": "Your Company Name",
+	"supportEmail": "support@example.com",
+	"privacyEmail": "privacy@example.com",
+	"websiteUrl": "https://example.com",
+	"faqs": [
+		{
+			"question": "How do I cancel my subscription?",
+			"answer": "Subscriptions are managed through your Apple ID subscription settings."
+		},
+		{
+			"question": "How do I contact support?",
+			"answer": "Email us with your app name, device model, OS version, and a description of the issue."
+		}
+	]
+}

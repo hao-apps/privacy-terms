@@ -1,0 +1,18 @@
+{
+	"name": "Maxxing AI",
+	"companyName": "Your Company Name",
+	"supportEmail": "maxxing-ai-support@example.com",
+	"privacyEmail": "privacy@example.com",
+	"appStoreUrl": "https://apps.apple.com/app/xxx",
+	"websiteUrl": "https://example.com",
+	"faqs": [
+		{
+			"question": "How do I cancel my Maxxing AI subscription?",
+			"answer": "You can manage or cancel your subscription from your Apple ID subscription settings."
+		},
+		{
+			"question": "Why is AI output sometimes inaccurate?",
+			"answer": "AI-generated content may contain mistakes. Please verify important information."
+		}
+	]
+}

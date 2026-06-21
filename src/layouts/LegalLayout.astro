@@ -1,0 +1,67 @@
+---
+import "../styles/global.css";
+import type { AppConfig } from "@/config/types";
+
+type Props = {
+	app: AppConfig;
+	title: string;
+	description: string;
+};
+
+const { app, title, description } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<link rel="canonical" href={canonicalURL} />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<div class="min-h-screen bg-background">
+			<header class="border-b bg-background/95">
+				<div class="mx-auto flex w-full max-w-3xl flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+					<a class="text-sm font-medium text-foreground" href={`/${app.slug}/support`}>
+						{app.name}
+					</a>
+					<nav class="flex flex-wrap gap-4 text-sm text-muted-foreground" aria-label="Legal pages">
+						<a class="hover:text-foreground" href={`/${app.slug}/privacy`}>Privacy</a>
+						<a class="hover:text-foreground" href={`/${app.slug}/terms`}>Terms</a>
+						<a class="hover:text-foreground" href={`/${app.slug}/support`}>Support</a>
+					</nav>
+				</div>
+			</header>
+
+			<main class="mx-auto w-full max-w-3xl px-6 py-10 sm:py-14">
+				<slot />
+			</main>
+
+			<footer class="border-t">
+				<div class="mx-auto flex w-full max-w-3xl flex-col gap-2 px-6 py-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
+					<p>{app.companyName}</p>
+					{
+						app.websiteUrl && (
+							<a class="hover:text-foreground" href={app.websiteUrl}>
+								Website
+							</a>
+						)
+					}
+				</div>
+			</footer>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,38 @@
+---
+import LegalLayout from "@/layouts/LegalLayout.astro";
+import { getAppSlugsForDocument } from "@/config/app-slugs";
+import { loadAppConfig } from "@/config/load-app-config";
+
+export function getStaticPaths() {
+	return getAppSlugsForDocument("terms").map((app) => ({
+		params: { app },
+	}));
+}
+
+const appSlug = Astro.params.app;
+
+if (!appSlug) {
+	return Astro.redirect("/404");
+}
+
+const app = loadAppConfig(appSlug);
+const modules = import.meta.glob("../../content/apps/*/terms.md");
+const loader = modules[`../../content/apps/${appSlug}/terms.md`];
+
+if (!loader) {
+	return Astro.redirect("/404");
+}
+
+const mod = await loader() as { Content: unknown };
+const Content = mod.Content;
+---
+
+<LegalLayout
+	app={app}
+	title={`${app.name} Terms of Use`}
+	description={`Terms of use for ${app.name}.`}
+>
+	<article class="legal-prose">
+		<Content />
+	</article>
+</LegalLayout>
