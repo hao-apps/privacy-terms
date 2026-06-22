@@ -7,7 +7,7 @@ export type AppConfig = {
 	slug: string;
 	name: string;
 	companyName?: string;
-	supportEmail?: string;
+	supportEmail?: string[];
 	privacyEmail?: string;
 	appStoreUrl?: string;
 	googlePlayUrl?: string;

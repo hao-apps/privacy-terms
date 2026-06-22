@@ -14,6 +14,18 @@ const optionalEmail = z.preprocess(
 	(value) => (typeof value === "string" ? value.trim() || undefined : value),
 	z.string().email().optional(),
 );
+const optionalEmailList = z.preprocess(
+	(value) => {
+		if (!Array.isArray(value)) {
+			return value;
+		}
+
+		return value
+			.map((item) => (typeof item === "string" ? item.trim() : item))
+			.filter((item) => item !== "");
+	},
+	z.array(z.string().email()).min(1).optional(),
+);
 const optionalUrl = z.preprocess(
 	(value) => (typeof value === "string" ? value.trim() || undefined : value),
 	z.string().url().optional(),
@@ -22,7 +34,7 @@ const optionalUrl = z.preprocess(
 const rawAppConfigSchema = z.object({
 	name: z.string().min(1).optional(),
 	companyName: optionalString,
-	supportEmail: optionalEmail,
+	supportEmail: optionalEmailList,
 	privacyEmail: optionalEmail,
 	appStoreUrl: optionalUrl,
 	googlePlayUrl: optionalUrl,

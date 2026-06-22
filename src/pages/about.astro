@@ -4,7 +4,10 @@ import { loadAppConfig } from '../config/load-app-config';
 import Layout from '../layouts/BlogPost.astro';
 
 const app = loadAppConfig('maxxing-ai');
-const supportEmail = app.supportEmail ?? 'support@mail.finoai.net';
+const supportEmail = app.supportEmail?.[0] ?? 'support@mail.finoai.net';
+const supportMailto = `mailto:${supportEmail}?subject=${encodeURIComponent(
+	`${app.name} Support Request`,
+)}`;
 ---
 
 <Layout
@@ -42,7 +45,7 @@ const supportEmail = app.supportEmail ?? 'support@mail.finoai.net';
 	<h2>Support</h2>
 	<p>
 		For product questions, bug reports, or account support, email
-		<a href={`mailto:${supportEmail}`}>{supportEmail}</a>. Include the app name, your device
+		<a href={supportMailto}>{supportEmail}</a>. Include the app name, your device
 		model, OS version, and a short description of the issue so we can investigate efficiently.
 	</p>
 

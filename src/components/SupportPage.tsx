@@ -20,8 +20,15 @@ type Props = {
 	app: AppConfig;
 };
 
+function getSupportMailto(email: string, appName: string) {
+	const subject = encodeURIComponent(`${appName} Support Request`);
+
+	return `mailto:${email}?subject=${subject}`;
+}
+
 export function SupportPage({ app }: Props) {
 	const faqs = app.faqs ?? [];
+	const supportEmails = app.supportEmail ?? [];
 	const hasStoreLinks = Boolean(app.appStoreUrl || app.googlePlayUrl);
 
 	return (
@@ -36,7 +43,7 @@ export function SupportPage({ app }: Props) {
 				</p>
 			</section>
 
-			{app.supportEmail && (
+			{supportEmails.length > 0 && (
 				<Card>
 					<CardHeader>
 						<CardTitle>Contact Support</CardTitle>
@@ -45,14 +52,21 @@ export function SupportPage({ app }: Props) {
 							request.
 						</CardDescription>
 					</CardHeader>
-					<CardContent className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-						<p className="text-sm text-muted-foreground">{app.supportEmail}</p>
-						<Button asChild>
-							<a href={`mailto:${app.supportEmail}`}>
-								<MailIcon data-icon="inline-start" />
-								Email Support
-							</a>
-						</Button>
+					<CardContent className="flex flex-col gap-3">
+						{supportEmails.map((email) => (
+							<div
+								key={email}
+								className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
+							>
+								<p className="text-sm text-muted-foreground">{email}</p>
+								<Button asChild>
+									<a href={getSupportMailto(email, app.name)}>
+										<MailIcon data-icon="inline-start" />
+										Email Support
+									</a>
+								</Button>
+							</div>
+						))}
 					</CardContent>
 				</Card>
 			)}
