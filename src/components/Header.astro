@@ -1,16 +1,23 @@
 ---
 import { SITE_TITLE } from '../consts';
 import HeaderLink from './HeaderLink.astro';
+
+interface Props {
+	hideBrand?: boolean;
+	hideSocial?: boolean;
+}
+
+const { hideBrand = false, hideSocial = false } = Astro.props;
 ---
 
 <header>
 	<nav>
-		<h2><a href="/">{SITE_TITLE}</a></h2>
+		{!hideBrand && <h2><a href="/">{SITE_TITLE}</a></h2>}
 		<div class="internal-links">
 			<HeaderLink href="/">Home</HeaderLink>
 			<HeaderLink href="/about">About</HeaderLink>
 		</div>
-		<div class="social-links">
+		{!hideSocial && <div class="social-links">
 			<a href="https://m.webtoo.ls/@astro" target="_blank">
 				<span class="sr-only">Follow Astro on Mastodon</span>
 				<svg viewBox="0 0 16 16" aria-hidden="true" width="32" height="32"
@@ -38,7 +45,7 @@ import HeaderLink from './HeaderLink.astro';
 					></path></svg
 				>
 			</a>
-		</div>
+		</div>}
 	</nav>
 </header>
 <style>
@@ -61,6 +68,9 @@ import HeaderLink from './HeaderLink.astro';
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+	}
+	nav:has(> .internal-links:first-child:last-child) {
+		justify-content: center;
 	}
 	nav a {
 		padding: 1em 0.5em;
